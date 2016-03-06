@@ -198,11 +198,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     **/
            switch (position) {
                 case 0:
-                    return "Suck".toUpperCase(l);
+                    return "Home".toUpperCase(l);
                 case 1:
-                    return "My".toUpperCase(l);
+                    return "Map".toUpperCase(l);
                 case 2:
-                    return "Dick".toUpperCase(l);
+                    return "Calendar".toUpperCase(l);
             }
             return null;
         }

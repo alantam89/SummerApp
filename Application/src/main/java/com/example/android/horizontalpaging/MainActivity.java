@@ -78,9 +78,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // BEGIN_INCLUDE (page_change_listener)
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
+           public void onPageSelected(int position) {
+               actionBar.setSelectedNavigationItem(position);
+           }
         });
         // END_INCLUDE (page_change_listener)
 

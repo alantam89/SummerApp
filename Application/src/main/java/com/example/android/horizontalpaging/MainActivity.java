@@ -16,6 +16,7 @@ import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 
 import java.util.Locale;
@@ -36,6 +37,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    CalendarView calendar;
 
     /**
      * Create the activity. Sets up an {@link android.app.ActionBar} with tabs, and then configures the
@@ -214,7 +216,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      * This would be replaced with your application's content.
      */
-    public static class DummySectionFragment extends Fragment {
+    public class DummySectionFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -241,8 +243,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
+            super.onCreate(savedInstanceState);
+            //setContentView(R.layout.activity_calendar);
+            //View calView = inflater.inflate(R.layout.activity_calendar, container, false);
+
           //  TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
             ImageView image = (ImageView) rootView.findViewById(R.id.bodyImg);
+            calendar = (CalendarView) rootView.findViewById(R.id.calendar);
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
@@ -256,7 +263,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 case 3:
                    // dummyTextView.setText("yes");
-                    image.setImageResource(R.drawable.cal_icon);
+                    //image.setImageResource(R.drawable.cal_icon);
+                    //return rootView;
+                    //setContentView(R.layout.activity_calendar);
+                    //calendar = (CalendarView) rootView.findViewById(R.id.calendar);
                     return rootView;
             }
 

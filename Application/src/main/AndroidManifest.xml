@@ -24,6 +24,10 @@
          available in API 11 or above. -->
     <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/uh_icon"
@@ -32,7 +36,7 @@
         <!-- This is a standard Activity invocation for MainActivity. -->
         <activity
             android:name="com.example.android.horizontalpaging.MainActivity"
-            android:label="Shitty App" >
+            android:label="Summer App" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

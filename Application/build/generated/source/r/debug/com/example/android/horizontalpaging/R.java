@@ -283,7 +283,7 @@ containing a value of this type.
     public static final class id {
         public static final int alignBounds=0x7f080002;
         public static final int alignMargins=0x7f080003;
-        public static final int bodyImg=0x7f080014;
+        public static final int bodyImg=0x7f080016;
         public static final int bottom=0x7f080004;
         public static final int calendar=0x7f080012;
         public static final int center=0x7f080005;
@@ -295,20 +295,23 @@ containing a value of this type.
         public static final int fill=0x7f08000b;
         public static final int fill_horizontal=0x7f08000c;
         public static final int fill_vertical=0x7f08000d;
+        public static final int frame=0x7f080013;
         public static final int horizontal=0x7f080000;
         public static final int left=0x7f08000e;
-        public static final int pager=0x7f080016;
+        public static final int map=0x7f080014;
+        public static final int pager=0x7f080018;
         public static final int right=0x7f08000f;
-        public static final int section_label=0x7f080013;
+        public static final int section_label=0x7f080015;
         public static final int start=0x7f080010;
-        public static final int tabImg=0x7f080015;
+        public static final int tabImg=0x7f080017;
         public static final int top=0x7f080011;
         public static final int vertical=0x7f080001;
     }
     public static final class layout {
         public static final int activity_calendar=0x7f030000;
-        public static final int fragment_main_dummy=0x7f030001;
-        public static final int main=0x7f030002;
+        public static final int activity_map=0x7f030001;
+        public static final int fragment_main_dummy=0x7f030002;
+        public static final int main=0x7f030003;
     }
     public static final class string {
         public static final int action_settings=0x7f070000;

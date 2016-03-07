@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    // using inside onCreate
     CalendarView calendar;
 
     /**
@@ -189,8 +190,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
 
+     // attempting to add icons to tabs
             //reference: https://www.youtube.com/watch?v=WSaSNX5QI-E
-   /**         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),icons[position]);
+
+    /**         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),icons[position]);
             drawable.setBounds(0,0, 20, 20);
             ImageSpan imageSpan = new ImageSpan(drawable);
             SpannableString spanString = new SpannableString(" ");
@@ -226,29 +229,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public DummySectionFragment() {
         }
 
-        @Override
-  /**      public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
-            TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
-            dummyTextView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-
-            //my code
-          //  ImageView image = (ImageView) rootView.findViewById(R.id.section_label);
-          //  image.setImageResource(R.drawable.home);
-
-            return rootView;
-        }  **/
-
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
-            super.onCreate(savedInstanceState);
+
+    // attempt to add calendar in switch
+            //super.onCreate(savedInstanceState);
             //setContentView(R.layout.activity_calendar);
             //View calView = inflater.inflate(R.layout.activity_calendar, container, false);
 
           //  TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
             ImageView image = (ImageView) rootView.findViewById(R.id.bodyImg);
+
+    // adds calendar to app
             calendar = (CalendarView) rootView.findViewById(R.id.calendar);
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
@@ -264,7 +257,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 3:
                    // dummyTextView.setText("yes");
                     //image.setImageResource(R.drawable.cal_icon);
-                    //return rootView;
+
+                    // Some attempts to put calendar in switch. Other attempts made but deleted
+
                     //setContentView(R.layout.activity_calendar);
                     //calendar = (CalendarView) rootView.findViewById(R.id.calendar);
                     return rootView;

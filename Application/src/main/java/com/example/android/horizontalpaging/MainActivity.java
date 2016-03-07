@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -202,9 +204,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             return spanString;
     **/
+          //  TextView textView = (TextView)findViewById(R.id.section_label);
+            //CharSequence testTab = (CharSequence) findViewById(R.id.section_label);
+
+            Spannable ss = new SpannableString("junk");
+             Drawable d = getResources().getDrawable(R.drawable.map_icon);
+             d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+             ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
+             ss.setSpan(span, 3, 4, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+         //   textView.setText(ss);
+         //   String testTab = ss.toString();
+
            switch (position) {
                 case 0:
-                    return "Home".toUpperCase(l);
+                    return ss;
+                    //return "Home".toUpperCase(l);
                 case 1:
                     return "Map".toUpperCase(l);
                 case 2:
@@ -236,12 +250,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // creates view with activity_calendar.xml
             View calView = inflater.inflate(R.layout.activity_calendar, container, false);
 
-          //  TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
+            TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
+
+
             ImageView image = (ImageView) rootView.findViewById(R.id.bodyImg);
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
-                   // dummyTextView.setText("sux");
+                    //dummyTextView.setText("page");
                     image.setImageResource(R.drawable.home);
                     return rootView;
                 case 2:

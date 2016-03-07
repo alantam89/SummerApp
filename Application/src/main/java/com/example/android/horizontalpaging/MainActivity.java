@@ -232,17 +232,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
-
-    // attempt to add calendar in switch
-            //super.onCreate(savedInstanceState);
-            //setContentView(R.layout.activity_calendar);
-            //View calView = inflater.inflate(R.layout.activity_calendar, container, false);
+            // creates view with activity_calendar.xml
+            View calView = inflater.inflate(R.layout.activity_calendar, container, false);
 
           //  TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
             ImageView image = (ImageView) rootView.findViewById(R.id.bodyImg);
-
-    // adds calendar to app
-            calendar = (CalendarView) rootView.findViewById(R.id.calendar);
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
@@ -255,14 +249,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     return rootView;
 
                 case 3:
-                   // dummyTextView.setText("yes");
-                    //image.setImageResource(R.drawable.cal_icon);
-
-                    // Some attempts to put calendar in switch. Other attempts made but deleted
-
-                    //setContentView(R.layout.activity_calendar);
-                    //calendar = (CalendarView) rootView.findViewById(R.id.calendar);
-                    return rootView;
+                    // return calendar widget
+                    return calView;
             }
 
 //          TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);

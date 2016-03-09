@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Spannable;
@@ -21,6 +22,18 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
 
@@ -74,6 +87,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -100,6 +115,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
+
         }
         // END_INCLUDE (add_tabs)
     }
@@ -234,7 +250,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      * This would be replaced with your application's content.
      */
-    public class DummySectionFragment extends Fragment {
+    public static class DummySectionFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -244,11 +260,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public DummySectionFragment() {
         }
 
+
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+
+
             View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
             // creates view with activity_calendar.xml
             View calView = inflater.inflate(R.layout.activity_calendar, container, false);
+
+
 
             TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 
@@ -262,8 +284,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     return rootView;
                 case 2:
                    // dummyTextView.setText("no");
-                    image.setImageResource(R.drawable.map);
-                    return rootView;
+                    //image.setImageResource(R.drawable.map);
+                    MapTab maptab = new MapTab();
+                    break;
+                    //return rootView;
 
                 case 3:
                     // return calendar widget
@@ -275,5 +299,35 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return rootView;
         }
     }
+
+    /**
+     * hmm no tsure how to get this to display into the right tab. I tried to call this and break since the map
+     * is created when a new object is made. I think. Could use some help tinkering this part.
+     * Note: activity_map is the layout that holds the map fragment.
+     */
+    public static class MapTab extends FragmentActivity implements OnMapReadyCallback {
+
+        public MapTab() {
+
+        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_map);
+
+            SupportMapFragment mapFragment =
+                    (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        }
+
+        @Override
+        public void onMapReady(GoogleMap map) {
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(0, 0))
+                    .title("Marker"));
+        }
+
+    }
+
 
 }

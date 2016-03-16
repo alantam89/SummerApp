@@ -22,7 +22,12 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,9 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import android.content.Intent;
 
 import java.util.Locale;
 
@@ -56,6 +59,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     // using inside onCreate
     CalendarView calendar;
 
+
+    //MapTab mapview;
     /**
      * Create the activity. Sets up an {@link android.app.ActionBar} with tabs, and then configures the
      * {@link ViewPager} contained inside R.layout.activity_main.
@@ -116,8 +121,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
 
+
         }
         // END_INCLUDE (add_tabs)
+    }
+
+    public void sendMessageR(View view) {
+        Intent intent = new Intent(this, MapsRedActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -177,10 +188,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // getItem is called to instantiate the fragment for the given page.
             // Return a DummySectionFragment (defined as a static inner class
             // below) with the page number as its lone argument.
-            Fragment fragment = new DummySectionFragment();
-            Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-            fragment.setArguments(args);
+            Fragment fragment;
+
+                fragment = new DummySectionFragment();
+                Bundle args = new Bundle();
+                args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+                fragment.setArguments(args);
+
             return fragment;
         }
         // END_INCLUDE (fragment_pager_adapter_getitem)
@@ -269,6 +283,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
             // creates view with activity_calendar.xml
             View calView = inflater.inflate(R.layout.activity_calendar, container, false);
+            //SomeFragment map = new SomeFragment();
+            View mapView = inflater.inflate(R.layout.activity_map, container, false);
+           // View mapView = SomeFragment.OnCreateView(inflater, container, savedInstanceState);
+
 
 
 
@@ -285,8 +303,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 2:
                    // dummyTextView.setText("no");
                     //image.setImageResource(R.drawable.map);
-                    MapTab maptab = new MapTab();
-                    break;
+                    //MapTab maptab = new MapTab();
+                    return mapView;
                     //return rootView;
 
                 case 3:
@@ -300,11 +318,62 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
+    public static class SomeFragment extends Fragment {
+
+        MapView mapView;
+        GoogleMap map;
+
+        public SomeFragment() {
+
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.activity_map, container, false);
+
+            // Gets the MapView from the XML layout and creates it
+            mapView = (MapView) v.findViewById(R.id.mapview);
+            mapView.onCreate(savedInstanceState);
+
+            // Gets to GoogleMap from the MapView and does initialization stuff
+            map = mapView.getMap();
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+            map.setMyLocationEnabled(true);
+
+            // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+            MapsInitializer.initialize(this.getActivity());
+
+            // Updates the location and zoom of the MapView
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
+            map.animateCamera(cameraUpdate);
+
+            return v;
+        }
+
+        @Override
+        public void onResume() {
+            mapView.onResume();
+            super.onResume();
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            mapView.onDestroy();
+        }
+
+        @Override
+        public void onLowMemory() {
+            super.onLowMemory();
+            mapView.onLowMemory();
+        }
+
+    }
     /**
      * hmm no tsure how to get this to display into the right tab. I tried to call this and break since the map
      * is created when a new object is made. I think. Could use some help tinkering this part.
      * Note: activity_map is the layout that holds the map fragment.
      */
+    /**
     public static class MapTab extends FragmentActivity implements OnMapReadyCallback {
 
         public MapTab() {
@@ -312,6 +381,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
+            MapFragment mMapFragment = MapFragment.newInstance();
+            FragmentTransaction fragmentTransaction =
+                    getFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.action_bar_activity_content, mMapFragment);
+            fragmentTransaction.commit();
+
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_map);
 
@@ -328,6 +404,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
 
     }
+        **/
 
 
 }

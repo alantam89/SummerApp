@@ -3,6 +3,7 @@ package com.example.android.horizontalpaging;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -127,8 +128,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public void sendMessageR(View view) {
-        Intent intent = new Intent(this, MapsRedActivity.class);
-        startActivity(intent);
+        //Intent mapIntent = new Intent(this, MapsRedActivity.class);
+        Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 
     /**

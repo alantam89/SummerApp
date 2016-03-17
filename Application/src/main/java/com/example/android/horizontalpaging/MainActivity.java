@@ -1,5 +1,6 @@
 package com.example.android.horizontalpaging;
 
+import java.io.*;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
@@ -127,9 +128,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // END_INCLUDE (add_tabs)
     }
 
-    public void sendMessageR(View view) {
+    public void sendMessageR() {
         //Intent mapIntent = new Intent(this, MapsRedActivity.class);
-        Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194");
+        String query = "bilger addition";
+        //this commented out code sets the zoom to UH Manoa. used for testing without GPS (like at home laptop)
+        Uri gmmIntentUri = Uri.parse("geo:21.294088,-157.820490?q=" + Uri.encode(query));
+
+        //this Uri intent uses GPS and navigates from your location
+        //query = query.replace(" ", "+");
+        //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + query);
+
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         if (mapIntent.resolveActivity(getPackageManager()) != null) {
@@ -150,6 +158,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, tell the ViewPager to switch to the corresponding page.
         mViewPager.setCurrentItem(tab.getPosition());
+
+        if(tab.getPosition() == 1) {
+            sendMessageR();
+        }
     }
     // END_INCLUDE (on_tab_selected)
 
@@ -270,7 +282,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      * This would be replaced with your application's content.
      */
-    public static class DummySectionFragment extends Fragment {
+    public class DummySectionFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -323,94 +335,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return rootView;
         }
     }
-
-    public static class SomeFragment extends Fragment {
-
-        MapView mapView;
-        GoogleMap map;
-
-        public SomeFragment() {
-
-        }
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.activity_map, container, false);
-
-            // Gets the MapView from the XML layout and creates it
-            mapView = (MapView) v.findViewById(R.id.mapview);
-            mapView.onCreate(savedInstanceState);
-
-            // Gets to GoogleMap from the MapView and does initialization stuff
-            map = mapView.getMap();
-            map.getUiSettings().setMyLocationButtonEnabled(false);
-            map.setMyLocationEnabled(true);
-
-            // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-            MapsInitializer.initialize(this.getActivity());
-
-            // Updates the location and zoom of the MapView
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
-            map.animateCamera(cameraUpdate);
-
-            return v;
-        }
-
-        @Override
-        public void onResume() {
-            mapView.onResume();
-            super.onResume();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            mapView.onDestroy();
-        }
-
-        @Override
-        public void onLowMemory() {
-            super.onLowMemory();
-            mapView.onLowMemory();
-        }
-
-    }
-    /**
-     * hmm no tsure how to get this to display into the right tab. I tried to call this and break since the map
-     * is created when a new object is made. I think. Could use some help tinkering this part.
-     * Note: activity_map is the layout that holds the map fragment.
-     */
-    /**
-    public static class MapTab extends FragmentActivity implements OnMapReadyCallback {
-
-        public MapTab() {
-
-        }
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-
-            MapFragment mMapFragment = MapFragment.newInstance();
-            FragmentTransaction fragmentTransaction =
-                    getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.action_bar_activity_content, mMapFragment);
-            fragmentTransaction.commit();
-
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_map);
-
-            SupportMapFragment mapFragment =
-                    (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-        }
-
-        @Override
-        public void onMapReady(GoogleMap map) {
-            map.addMarker(new MarkerOptions()
-                    .position(new LatLng(0, 0))
-                    .title("Marker"));
-        }
-
-    }
-        **/
 
 
 }
